@@ -18,9 +18,10 @@ INSERT INTO Movie (title, duration, genre) VALUES
 
 -- Insert data into Screening table
 INSERT INTO Screening (time, movieId, auditoriumId) VALUES
-('2023-09-02 19:00:00', 1, 2),
-('2023-09-02 21:00:00', 2, 3),
-('2023-09-04 23:00:00', 3, 4);
+('2023-09-02 19:00:00', 1, 1),
+('2023-09-02 21:00:00', 2, 2),
+('2023-09-04 23:00:00', 3, 3);
+
 
 -- Insert data into Rate table
 INSERT INTO Rate (type, price) VALUES
@@ -100,6 +101,19 @@ UPDATE LocalAdmin SET password = AES_ENCRYPT('password', 'secret_key') WHERE id 
 
 -- Update password data in SuperAdmin table
 UPDATE SuperAdmin SET password = AES_ENCRYPT('password', 'secret_key') WHERE id = 1;
+
+-- Descripton of the booking table
+DESC Booking;
+
+-- Remove column from Booking table
+ALTER TABLE Booking DROP COLUMN paymentMethod;
+
+-- Add column payementMethodId to Boonking table
+ALTER TABLE Booking ADD COLUMN paymentMethodId INT;
+ALTER TABLE Booking ADD FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod(id);
+
+-- Insert fictive bookings
+INSERT INTO Booking (screeningId, rateId, clientId, paymentMethodId) VALUES (1, 2, 1, 3), (2, 2, 2, 1), (3, 1, 3, 3);
 
 
 
