@@ -51,34 +51,39 @@ CREATE TABLE Client (
     email VARCHAR(255) UNIQUE NOT NULL
 );
 
--- Creation of the Booking table
-CREATE TABLE Booking (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    screeningId INT,
-    rateId INT,
-    clientId INT,
-    paymentMethod VARCHAR(50),
-    FOREIGN KEY (screeningId) REFERENCES Screening(id),
-    FOREIGN KEY (rateId) REFERENCES Rate(id),
-    FOREIGN KEY (clientId) REFERENCES Client(id)
-);
-
 -- Creation of the PaymentMethod table
 CREATE TABLE PaymentMethod (
     id INT PRIMARY KEY AUTO_INCREMENT,
     method VARCHAR(50) NOT NULL
 );
 
+-- Creation of the Booking table
+CREATE TABLE Booking (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    screeningId INT,
+    rateId INT,
+    clientId INT,
+    paymentMethodId INT,
+    FOREIGN KEY (screeningId) REFERENCES Screening(id),
+    FOREIGN KEY (rateId) REFERENCES Rate(id),
+    FOREIGN KEY (clientId) REFERENCES Client(id),
+    FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod(id)
+);
+
 -- Creation of the LocalAdmin table
 CREATE TABLE LocalAdmin (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
     movieTheaterId INT,
+    password VARBINARY(256) NOT NULL,
     FOREIGN KEY (movieTheaterId) REFERENCES MovieTheater(id)
 );
 
 -- Creation of the SuperAdmin table
 CREATE TABLE SuperAdmin (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
+    password VARBINARY(256) NOT NULL
 );
